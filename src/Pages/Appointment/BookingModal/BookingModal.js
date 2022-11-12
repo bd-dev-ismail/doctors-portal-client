@@ -1,7 +1,9 @@
+import { format } from 'date-fns/esm';
 import React from 'react';
 
-const BookingModal = ({ treatment }) => {
-    const {name} = treatment;
+const BookingModal = ({ treatment, selectedDate }) => {
+  const { name, slots } = treatment; //treatment == appoitnment options (Different Name)
+  const date = format(selectedDate, "PP");
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -13,13 +15,36 @@ const BookingModal = ({ treatment }) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">
-           {name}
-          </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
+          <h3 className="text-lg font-bold">{name}</h3>
+          <form className="grid grid-cols-1 gap-3 mt-10">
+            <input
+              type="text"
+              disabled
+              value={date}
+              className="input input-bordered w-full"
+            />
+            <select className="select select-bordered w-full">
+              {slots.map((slot, idx) => (
+                <option key={idx} value={slot}>{slot}</option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered w-full"
+            />
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered w-full"
+            />
+            <br />
+            <input
+              type="submit"
+              value="Submit"
+              className="w-full btn btn-accent"
+            />
+          </form>
         </div>
       </div>
     </>
