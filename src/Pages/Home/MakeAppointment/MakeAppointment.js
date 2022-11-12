@@ -1,20 +1,20 @@
 import React from 'react';
-import treatment from '../../../assets/images/treatment.png';
+import doctor from '../../../assets/images/doctor.png';
+import appointment from '../../../assets/images/appointment.png';
 import PrimaryButton from '../../../components/PrimaryButton/PrimaryButton';
-const Terms = () => {
+const MakeAppointment = () => {
     return (
-      <div className="mb-32">
+      <section className='my-10' style={{background: `url(${appointment})`}}>
         <div className="hero">
-          <div className="hero-content grid grid-cols-1 lg:grid-cols-2 p-0 my-5">
+          <div className="hero-content flex-col lg:flex-row">
             <img
               alt=""
-              src={treatment}
-              className="lg:max-w-sm w-[90%] right-0 rounded-lg shadow-2xl"
+              src={doctor}
+              className="lg:w-1/2 -mt-32 hidden lg:block rounded-lg shadow-2xl"
             />
-            <div>
-              <h1 className="text-5xl font-bold">
-                Exceptional Dental Care, on Your Terms!
-              </h1>
+            <div className='text-white'>
+              <p className='text-primary text-xl font-bold my-5'>Appointment</p>
+              <h1 className="text-4xl font-bold">Make an appointment Today!</h1>
               <p className="py-6">
                 It is a long established fact that a reader will be distracted
                 by the readable content of a page when looking at its layout.
@@ -23,12 +23,12 @@ const Terms = () => {
                 here, content here', making it look like readable English. Many
                 desktop publishing packages and web page.
               </p>
-              <PrimaryButton>Get Started</PrimaryButton>
+             <PrimaryButton>Appointment</PrimaryButton>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     );
 };
 
-export default Terms;
+export default MakeAppointment;
