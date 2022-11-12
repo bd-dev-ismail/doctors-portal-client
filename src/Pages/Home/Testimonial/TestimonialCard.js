@@ -1,23 +1,27 @@
 import React from 'react';
 
-const TestimonialCard = ({testimonial}) => {
-    const {name, country, img, desc} = testimonial;
-    return (
-      <div>
-        <div className="card p-6 bg-base-100  items-start shadow-xl">
-          <div className="card-body p-0 my-9">
-            <p>{desc}</p>
-          </div>
-          <figure className="flex pb-14">
-            <img src={img} alt="Shoes" className="rounded-xl mr-3" />
-            <div>
-              <h2 className="card-title">{name}</h2>
-              <p>{country}</p>
+const TestimonialCard = ({ review }) => {
+  const { name, country, img, review: userReview } = review;
+  return (
+    <div>
+      <div className="card p-6 bg-base-100  items-start shadow-xl">
+        <div className="card-body">
+          <p>{userReview}</p>
+        </div>
+        <div className="flex ml-5 items-center mt-6">
+          <div className="avatar mr-6">
+            <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={img} alt='' />
             </div>
-          </figure>
+          </div>
+          <div>
+            <h2 className="card-title">{name}</h2>
+            <p>{country}</p>
+          </div>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default TestimonialCard;
