@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const SignUp = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, withGoogle } = useContext(AuthContext);
     const [signupError, setSignupError] = useState('');
+    const navigate = useNavigate();
     const handelSingUp = (data )=> {
         console.log(data);
         setSignupError('');
@@ -28,6 +29,15 @@ const SignUp = () => {
           setSignupError(err.message)
         })
     }
+     const handalGoogle = () => {
+       withGoogle()
+         .then((result) => {
+           const user = result.user;
+           console.log(user);
+           navigate("/");
+         })
+         .catch((err) => console.log(err));
+     };
     return (
       <div className="h-[800px] flex justify-center items-center">
         <div className="w-96 p-7">
@@ -74,9 +84,9 @@ const SignUp = () => {
                     message: "Password must be 6 Charaters or Long",
                   },
                   pattern: {
-                    value:
-                      /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/,
-                      message: "Password must have Uppercase Number & Special Characeter"
+                    value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/,
+                    message:
+                      "Password must have Uppercase Number & Special Characeter",
                   },
                 })}
                 className="input input-bordered w-full max-w-xs"
@@ -92,9 +102,9 @@ const SignUp = () => {
               value="Signup"
             />
             <div>
-              {
-                signupError && <p className='text-warning my-2'>{signupError}</p>
-              }
+              {signupError && (
+                <p className="text-warning my-2">{signupError}</p>
+              )}
             </div>
           </form>
           <p className="my-3">
@@ -104,7 +114,10 @@ const SignUp = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline w-full mt-3">
+          <button
+            onClick={handalGoogle}
+            className="btn btn-outline w-full mt-3"
+          >
             Continue With Google
           </button>
         </div>

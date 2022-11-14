@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
     const {register, formState: {errors},  handleSubmit} = useForm();
-    const { signIn } = useContext(AuthContext);
+    const { signIn, withGoogle } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
@@ -23,6 +23,15 @@ const Login = () => {
           console.log(err.message);
           setLoginError(err.message)
         });
+    };
+    const handalGoogle = ()=> {
+      withGoogle()
+      .then(result=> {
+        const user = result.user;
+        console.log(user);
+        navigate("/")
+      })
+      .catch(err => console.log(err))
     }
     return (
       <div className="h-[800px] flex justify-center items-center">
@@ -89,7 +98,7 @@ const Login = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline w-full mt-3">
+          <button onClick={handalGoogle} className="btn btn-outline w-full mt-3">
             Continue With Google
           </button>
         </div>
