@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
 
 const SignUp = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
+    const { createUser, updateUser } = useContext(AuthContext);
+    const [signupError, setSignupError] = useState('');
     const handelSingUp = (data )=> {
         console.log(data);
+        setSignupError('');
+        createUser(data.email, data.password)
+        .then(result=> {
+            const user = result.user;
+            console.log(user);
+            toast.success('User Create sussessfully!')
+            const userInfo = {
+              displayName: data.name,
+            };
+            updateUser(userInfo)
+            .then(()=>{})
+            .catch(err=> console.log(err))
+        })
+        .catch(err=> {
+          console.error(err)
+          setSignupError(err.message)
+        })
     }
     return (
       <div className="h-[800px] flex justify-center items-center">
@@ -46,7 +67,18 @@ const SignUp = () => {
               </label>
               <input
                 type="password"
-                {...register("password", { required: "Password is Required", minLength: {value: 6, message: "Password must be 6 Charaters or Long"} })}
+                {...register("password", {
+                  required: "Password is Required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be 6 Charaters or Long",
+                  },
+                  pattern: {
+                    value:
+                      /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/,
+                      message: "Password must have Uppercase Number & Special Characeter"
+                  },
+                })}
                 className="input input-bordered w-full max-w-xs"
               />
               {errors.password && (
@@ -59,6 +91,11 @@ const SignUp = () => {
               type="submit"
               value="Signup"
             />
+            <div>
+              {
+                signupError && <p className='text-warning my-2'>{signupError}</p>
+              }
+            </div>
           </form>
           <p className="my-3">
             Already have an account?
