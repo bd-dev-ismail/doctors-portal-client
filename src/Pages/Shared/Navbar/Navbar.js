@@ -26,8 +26,8 @@ const Navbar = () => {
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
-            <li className='text-secondary font-semibold'>
-              <Link>{user ? user.displayName : 'Name'}</Link>
+            <li className="text-secondary font-semibold">
+              <Link>{user ? user.displayName : "Name"}</Link>
             </li>
             <li>
               <button onClick={handelLogOut}>
@@ -40,6 +40,7 @@ const Navbar = () => {
             <Link to="/login">Login</Link>
           </li>
         )}
+        
       </React.Fragment>
     );
     return (

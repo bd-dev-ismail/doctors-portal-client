@@ -21,3 +21,12 @@ module.exports = {
   },
   plugins: [require("daisyui")],
 };
+
+// const [theme, setTheme] = useState<boolean>(false);
+//     useEffect(() => {
+//         setTheme(JSON.parse(window.localStorage.getItem("theme") || "false"));
+//     }, [])
+
+//     const handleThemeChange: () => void = () => {
+//         setTheme(!theme);
+//         window.localStorage.setItem("theme", JSON.stringify(!theme));
