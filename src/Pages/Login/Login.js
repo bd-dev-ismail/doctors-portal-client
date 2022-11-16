@@ -118,7 +118,7 @@ const Login = () => {
                       Email
                     </label>
                     <input
-                    required
+                    
                       onChange={(e) => setForgetPass(e.target.value)}
                       defaultValue={user?.email}
                       type="email"
