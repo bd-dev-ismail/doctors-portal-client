@@ -10,7 +10,7 @@ const SignUp = () => {
     const [signupError, setSignupError] = useState('');
     const navigate = useNavigate();
     const handelSingUp = (data )=> {
-        console.log(data);
+        
         setSignupError('');
         createUser(data.email, data.password)
         .then(result=> {
@@ -21,7 +21,9 @@ const SignUp = () => {
               displayName: data.name,
             };
             updateUser(userInfo)
-            .then(()=>{})
+            .then(()=>{
+              navigate("/")
+            })
             .catch(err=> console.log(err))
         })
         .catch(err=> {
