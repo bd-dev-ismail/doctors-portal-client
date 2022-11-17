@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AllUsers from "../../Dashboard/AllUsers/AllUsers";
 import Dashboard from "../../Dashboard/Dashboard/Dashboard";
 import MyAppointment from "../../Dashboard/MyAppointment/MyAppointment";
 import DashboardLayout from "../../Layout/DashboardLayout";
@@ -42,9 +43,13 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/dashboard',
-        element: <MyAppointment></MyAppointment>
-      }
-    ]
+        path: "/dashboard",
+        element: <MyAppointment></MyAppointment>,
+      },
+      {
+        path: "/dashboard/allusers",
+        element: <AllUsers></AllUsers>,
+      },
+    ],
   },
 ]);

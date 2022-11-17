@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const {register, formState: {errors},  handleSubmit} = useForm();
@@ -10,9 +11,15 @@ const Login = () => {
       useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [forgetPass, setForgetPass] = useState(null);
+    const [loginUserEmail, setLoginUserEmail] = useState('');
+    const [token] = useToken(loginUserEmail);
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || "/";
+    if(token){
+      navigate(from, { replace: true });
+    }
+    
     const handalLogin = (data) => {
         console.log(data);
         setLoginError('');
@@ -20,13 +27,15 @@ const Login = () => {
         .then(result => {
           const user = result.user;
           console.log(user);
-          navigate(from, {replace: true})
+          setLoginUserEmail(data.email);
+          
         })
         .catch(err => {
           console.log(err.message);
           setLoginError(err.message)
         });
     };
+    //login with google
     const handalGoogle = ()=> {
       withGoogle()
       .then(result=> {
@@ -36,6 +45,8 @@ const Login = () => {
       })
       .catch(err => console.log(err))
     };
+
+    //Forget password!!
     const handelForgetPassword = () => {
       console.log(forgetPass);
       if (!forgetPass){
