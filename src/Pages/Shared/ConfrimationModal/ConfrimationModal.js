@@ -4,8 +4,9 @@ const ConfrimationModal = ({
   title,
   message,
   closeModal,
-  seccessAction,
-  modalData
+  successAction,
+  modalData,
+  successButtonName
 }) => {
   return (
     <div>
@@ -16,13 +17,16 @@ const ConfrimationModal = ({
           <p className="py-4">{message}</p>
           <div className="modal-action">
             <label
-              onClick={() => seccessAction(modalData)}
+              onClick={() => successAction(modalData)}
               htmlFor="confrimationModal"
               className="btn btn-sm btn-primary text-white"
             >
-              Confrim Delete
+              {successButtonName}
             </label>
-            <button onClick={closeModal} className="btn btn-sm btn-warning text-white">
+            <button
+              onClick={closeModal}
+              className="btn btn-sm btn-warning text-white"
+            >
               Cancel
             </button>
           </div>

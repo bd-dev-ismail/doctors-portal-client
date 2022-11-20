@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import Loading from "../../components/Loading/Loading";
 import ConfrimationModal from "../../Pages/Shared/ConfrimationModal/ConfrimationModal";
 
@@ -8,10 +9,8 @@ const MangeDoctors = () => {
     const closeModal = ()=>{
         setDeletingDoctor(null);
     };
-    const handalDeleteDoctor = (doctor)=> {
-        console.log(doctor);
-    }
-  const { data: doctors = [], isLoading } = useQuery({
+   
+  const { data: doctors = [], isLoading , refetch} = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
@@ -27,6 +26,23 @@ const MangeDoctors = () => {
       }
     },
   });
+   const handalDeleteDoctor = (doctor) => {
+     console.log(doctor);
+     fetch(`http://localhost:5000/doctors/${doctor?._id}`, {
+       method: "DELETE",
+       headers: {
+         authorization: `bearer ${localStorage.getItem("accessToken")}`,
+       },
+     })
+       .then((res) => res.json())
+       .then((data) => {
+         console.log(data);
+         if (data.deletedCount > 0){
+            refetch();
+            toast.success(`${doctor.name} deleted Successfully!!`)
+         } 
+       });
+   };
   if(isLoading){
     return <Loading></Loading>
   }
@@ -79,7 +95,8 @@ const MangeDoctors = () => {
           message={`If You are delete ${deletingDoctor.name}. Note: It cannot be undone!`}
           closeModal={closeModal}
           modalData={deletingDoctor}
-          seccessAction={handalDeleteDoctor}
+          successAction={handalDeleteDoctor}
+          successButtonName="Confrim Delete"
         ></ConfrimationModal>
       )}
     </div>
